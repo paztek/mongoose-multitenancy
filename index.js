@@ -4,21 +4,22 @@
  * MIT Licensed
  */
 
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 function multitenancyPlugin(schema, options) {
-  const account = 'account';
+  options = options || {};
+  const path = options.path || 'account';
 
-  if (!schema.path(account)) {
-    schema.add({
-      account: {
-        type: Schema.Types.ObjectId,
-        ref: 'Account',
-        index: true,
-        required: true
-      }
-    });
+  if (!schema.path(path)) {
+    const attributes = {};
+    attributes[path] = {
+      type: Schema.Types.ObjectId,
+      ref: 'Account',
+      index: true,
+      required: true
+    };
+    schema.add(attributes);
   }
 }
 

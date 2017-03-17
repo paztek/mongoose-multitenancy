@@ -1,7 +1,7 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-var multitenancy = require('../index');
+const multitenancy = require('../index');
 
 describe('Schema', function() {
 
@@ -25,18 +25,29 @@ describe('Schema', function() {
 
     beforeEach(function() {
       schema = new Schema({
-        firstName: String,
-        lastName: String
+        color: String,
+        age: Number
       });
     });
 
     it('adds a required `account` property on the model', function () {
       schema.plugin(multitenancy);
 
-      var path = schema.path('account');
+      const path = schema.path('account');
       should.exist(path);
       path.instance.should.eq('ObjectID');
       path.isRequired.should.eq(true);
+      path.options.ref.should.eq('Account');
+    });
+
+    it('uses the custom path if provided in the options', function() {
+      schema.plugin(multitenancy, { path: 'owner' });
+
+      const path = schema.path('owner');
+      should.exist(path);
+      path.instance.should.eq('ObjectID');
+      path.isRequired.should.eq(true);
+      path.options.ref.should.eq('Account');
     });
   });
 });
