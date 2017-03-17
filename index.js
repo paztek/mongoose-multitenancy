@@ -4,8 +4,22 @@
  * MIT Licensed
  */
 
-function multitenancyPlugin(schema, options) {
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
+function multitenancyPlugin(schema, options) {
+  const account = 'account';
+
+  if (!schema.path(account)) {
+    schema.add({
+      account: {
+        type: Schema.Types.ObjectId,
+        ref: 'Account',
+        index: true,
+        required: true
+      }
+    });
+  }
 }
 
 module.exports = multitenancyPlugin;

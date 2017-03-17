@@ -19,7 +19,24 @@ describe('Schema', function() {
     connection.close();
   });
 
-  it('should pass', function() {
-    true.should.be.true;
+  context('Definition', function() {
+
+    var schema;
+
+    beforeEach(function() {
+      schema = new Schema({
+        firstName: String,
+        lastName: String
+      });
+    });
+
+    it('adds a required `account` property on the model', function () {
+      schema.plugin(multitenancy);
+
+      var path = schema.path('account');
+      should.exist(path);
+      path.instance.should.eq('ObjectID');
+      path.isRequired.should.eq(true);
+    });
   });
 });
