@@ -49,5 +49,15 @@ describe('Schema', function() {
       path.isRequired.should.eq(true);
       path.options.ref.should.eq('Account');
     });
+
+    it('references a custom model if provided in the options', function() {
+      schema.plugin(multitenancy, { ref: 'User' });
+
+      const path = schema.path('account');
+      should.exist(path);
+      path.instance.should.eq('ObjectID');
+      path.isRequired.should.eq(true);
+      path.options.ref.should.eq('User');
+    });
   });
 });
