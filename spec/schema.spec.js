@@ -5,20 +5,6 @@ const multitenancy = require('../index');
 
 describe('Schema', function() {
 
-  var connection;
-
-  before(function() {
-    connection = mongoose.createConnection('mongodb://localhost/mongoose-multitenancy');
-    connection.on('error', function (err) {
-      console.error('MongoDB error: ' + err.message);
-      console.error('A running MongoDB server is necessary to run these tests');
-    });
-  });
-
-  after(function() {
-    connection.close();
-  });
-
   context('Definition', function() {
 
     var schema;
@@ -51,6 +37,11 @@ describe('Schema', function() {
     });
 
     it('references a custom model if provided in the options', function() {
+      const userSchema = new Schema({
+        username: String
+      });
+      const User = mongoose.model('User', userSchema);
+
       schema.plugin(multitenancy, { ref: 'User' });
 
       const path = schema.path('account');
