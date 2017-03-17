@@ -3,6 +3,9 @@ const Schema = mongoose.Schema;
 
 const multitenancy = require('../index');
 
+const Account = require('./models/Account');
+const User = require('./models/User');
+
 describe('Schema', function() {
 
   context('Definition', function() {
@@ -37,11 +40,6 @@ describe('Schema', function() {
     });
 
     it('references a custom model if provided in the options', function() {
-      const userSchema = new Schema({
-        username: String
-      });
-      const User = mongoose.model('User', userSchema);
-
       schema.plugin(multitenancy, { ref: 'User' });
 
       const path = schema.path('account');

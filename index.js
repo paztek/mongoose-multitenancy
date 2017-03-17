@@ -13,7 +13,7 @@ function multitenancyPlugin(schema, options) {
   const path = options.path || 'account';
   const ref = options.ref || 'Account';
 
-  const Model = mongoose.model(ref);
+  const Tenant = mongoose.model(ref);
 
   if (!schema.path(path)) {
     const attributes = {};
@@ -35,42 +35,54 @@ function multitenancyPlugin(schema, options) {
       const args = [].slice.call(arguments);
 
       if (args.length > 0) {
-        if (args[0] instanceof Model) {
-          // If the first argument is an account, we remove it from the list of arguments
-          const account = args.shift();
+        if (args[0] instanceof Tenant) {
+          // If the first argument is a tenant, we remove it from the list of arguments
+          const tenant = args.shift();
 
           if (args.length > 0) {
             // Next argument can be either null, the query or the callback function if no query was provided
             if (_.isFunction(args[0])) {
-              args.unshift({ account: account });
+              const query = {};
+              query[path] = tenant;
+              args.unshift(query);
             } else if (_.isPlainObject(args[0])) {
-              args[0].account = account;
+              args[0][path] = tenant;
             } else {
-              args[0] = { account: account };
+              const query = {};
+              query[path] = tenant;
+              args[0] = query;
             }
           } else {
-            args.unshift({ account: account });
+            const query = {};
+            query[path] = tenant;
+            args.unshift(query);
           }
         } else if (args[0] instanceof mongoose.Types.ObjectId || _.isString(args[0])) {
-          // If the first argument is an account ID, we remove it from the list of arguments
-          const accountId = args.shift();
+          // If the first argument is a tenant ID, we remove it from the list of arguments
+          const tenantId = args.shift();
 
           if (args.length > 0) {
             // Next argument can be either null, the query or the callback function if no query was provided
             if (_.isFunction(args[0])) {
-              args.unshift({ account: accountId });
+              const query = {};
+              query[path] = tenantId;
+              args.unshift(query);
             } else if (_.isPlainObject(args[0])) {
-              args[0].account = accountId;
+              args[0][path] = tenantId;
             } else {
-              args[0] = { account: accountId };
+              const query = {};
+              query[path] = tenantId;
+              args[0] = query;
             }
           } else {
-            args.unshift({ account: accountId });
+            const query = {};
+            query[path] = tenantId;
+            args.unshift(query);
           }
         }
       }
 
-      return Model[method].apply(this, args);
+      return Tenant[method].apply(this, args);
     };
   });
 }
