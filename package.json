@@ -1,0 +1,33 @@
+{
+  "name": "mongoose-multitenancy",
+  "version": "0.0.1",
+  "description": "Mongoose plugin to help with isolating documents of multiple tenants",
+  "scripts": {
+    "test": "mocha -u bdd -R spec -c --require ./spec/bootstrap.js ./spec/*.spec.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paztek/mongoose-multitenancy.git"
+  },
+  "keywords": [
+    "mongodb",
+    "mongoose",
+    "plugin",
+    "multitenancy"
+  ],
+  "author": "Matthieu Balmes <matthieu.balmes@gmail.com>",
+  "license": "MIT",
+  "engine": {
+    "node": ">= 4.0.0"
+  },
+  "bugs": {
+    "url": "https://github.com/paztek/mongoose-multitenancy/issues"
+  },
+  "homepage": "https://github.com/paztek/mongoose-multitenancy#readme",
+  "devDependencies": {
+    "bluebird": "^3.5.0",
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0",
+    "mongoose": "^4.9.0"
+  }
+}
