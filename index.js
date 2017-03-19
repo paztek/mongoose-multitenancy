@@ -34,6 +34,8 @@ function multitenancyPlugin(schema, options) {
     schema.statics[method] = function() {
       const args = [].slice.call(arguments);
 
+      var query = {};
+
       if (args.length > 0) {
         if (args[0] instanceof Tenant) {
           // If the first argument is a tenant, we remove it from the list of arguments
@@ -42,18 +44,15 @@ function multitenancyPlugin(schema, options) {
           if (args.length > 0) {
             // Next argument can be either null, the query or the callback function if no query was provided
             if (_.isFunction(args[0])) {
-              const query = {};
               query[path] = tenant;
               args.unshift(query);
             } else if (_.isPlainObject(args[0])) {
               args[0][path] = tenant;
             } else {
-              const query = {};
               query[path] = tenant;
               args[0] = query;
             }
           } else {
-            const query = {};
             query[path] = tenant;
             args.unshift(query);
           }
@@ -64,18 +63,15 @@ function multitenancyPlugin(schema, options) {
           if (args.length > 0) {
             // Next argument can be either null, the query or the callback function if no query was provided
             if (_.isFunction(args[0])) {
-              const query = {};
               query[path] = tenantId;
               args.unshift(query);
             } else if (_.isPlainObject(args[0])) {
               args[0][path] = tenantId;
             } else {
-              const query = {};
               query[path] = tenantId;
               args[0] = query;
             }
           } else {
-            const query = {};
             query[path] = tenantId;
             args.unshift(query);
           }
