@@ -1,5 +1,5 @@
 {
-  "name": "mongoose-multitenancy",
+  "name": "mongoose-plugin-multitenancy",
   "version": "0.0.1",
   "description": "Mongoose plugin to help with isolating documents of multiple tenants",
   "scripts": {
