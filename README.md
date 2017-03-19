@@ -20,7 +20,7 @@ Then, it provides syntactic sugar on top of the most used query methods to preve
 
 ## Installation
 
-`npm install mongoose-multitenancy`
+`npm install mongoose-plugin-multitenancy`
 
 ## Usage
 
