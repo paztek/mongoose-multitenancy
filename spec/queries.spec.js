@@ -32,7 +32,7 @@ describe('Queries', function() {
       color: String,
       brand: String
     });
-    schema.plugin(multitenancy);
+    schema.plugin(multitenancy, { model: Account });
 
     const Car = mongoose.model('Car', schema);
 
@@ -122,7 +122,7 @@ describe('Queries', function() {
       color: String,
       brand: String
     });
-    schema.plugin(multitenancy, { path: 'owner', ref: 'User' });
+    schema.plugin(multitenancy, { path: 'owner', model: User });
 
     const Voiture = mongoose.model('Voiture', schema);
 

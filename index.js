@@ -10,10 +10,18 @@ const _ = require('lodash');
 
 function multitenancyPlugin(schema, options) {
   options = options || {};
-  const path = options.path || 'account';
-  const ref = options.ref || 'Account';
 
-  const Tenant = mongoose.model(ref);
+  const path = options.path || 'account';
+
+  var ref;
+  var Tenant;
+  if (options.model) {
+    Tenant = options.model;
+    ref = Tenant.modelName;
+  } else {
+    ref = options.ref || 'Account';
+    Tenant = mongoose.model(ref);
+  }
 
   if (!schema.path(path)) {
     const attributes = {};
