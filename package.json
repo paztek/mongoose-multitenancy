@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/paztek/mongoose-multitenancy#readme",
   "devDependencies": {
-    "async": "^2.1.5",
+    "async": "^3.2.2",
     "bluebird": "^3.5.0",
     "chai": "^3.5.0",
     "mocha": "^3.2.0",
